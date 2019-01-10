@@ -1,18 +1,19 @@
 <html>
 <head>
 <title>Employee Home</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Prerequisites: jQuery and jQuery UI Stylesheet -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/redmond/jquery-ui.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="<?php echo base_url();?>https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="<?php echo base_url();?>https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- load jQuery and jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="<?php echo base_url();?>imports/jquery.ptTimeSelect.css">
-<script src="<?php echo base_url();?>imports/jquery.ptTimeSelect.js"></script>
 
+<!-- load jQuery UI CSS theme -->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<link rel="stylesheet" href="<?php echo base_url();?>imports/mdtimepicker.css">
+<script src="<?php echo base_url();?>imports/mdtimepicker.js"></script>
+
 <style>
 body{
           
@@ -44,46 +45,54 @@ body{
 </script>
 </head>
 <body>
-    
-    
+        <?php $id = intval($_GET['id']);?>
 
-    <div class="container" style="border-style: solid; border-width: 1px;border-radius: 15px;background-color: white;">
+    <?php
+    
+    $emploeeuserid = $_SESSION['emploeeuserid'];  
+    ?>
+    <?php if($id == $emploeeuserid){?>
+            <div class="container" style="border-style: solid; border-width: 1px;border-radius: 15px;background-color: white;">
         
-        <h2 style="text-align: center;">Empolyee Report From</h2>
+        <h2 style="text-align: center;"></h2>
 
   <div class="row">
       <form class="form-horizontal" name="myForm" onsubmit="return validateForm()" action="<?php echo base_url();?>Welcome/insertreport" method="post">
        <font color="red"> <?php echo $this -> session->flashdata("Created"); ?></font>
                   <!-- <font color="red"> <i><?php echo $this -> session->flashdata("Created"); ?></i></font> -->
-
+       <input type="hidden" value="<?php echo $id;?>" name ="empid"/>
     <div class="col-sm-6"><br>
     
     <div class="form-group">
-        <label class="control-label col-sm-4" for="email">Date*:</label>
+        <label class="control-label col-sm-4">Date*:</label>
         <div class="col-sm-8">
-            
-            <input type="text" class="form-control" id="date" placeholder="Enter Date " style="background-color:#5bc0de" name="date" required >
-      </div>
+              <input type="data" id="datepicker" class="form-control" style="background-color:#5bc0de;"  placeholder="Enter date" name="fromdata" >
+
 	</div>
+        </div>
 	<div class="form-group">
-      <label class="control-label col-sm-4" for="pwd">Strat time*</label>
+      <label class="control-label col-sm-4" for="pwd">Start time*</label>
       <div class="col-sm-8">          
-        <input type="text" class="form-control" id="sample1" placeholder="Enter Strat time"  name="stime">
+        <input type="text"  class="form-control" id="timepicker" placeholder="Enter Start Time" name="stime"/>    
       </div>
 	</div>
 	
 	<div class="form-group">
         <label class="control-label col-sm-4" for="pwd">Break*:</label>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             
-            <input type="text"   class="form-control" id="pass" placeholder="Enter Break Time " name="break" style="background-color:#5bc0de"  >
+            <input type="text"   class="form-control" id="pass" placeholder=" Form" name="breakstart" style="background-color:#5bc0de"  >
+      </div>
+         <div class="col-sm-4">
+            
+            <input type="text"   class="form-control" id="pass2" placeholder="To " name="breakend" style="background-color:#5bc0de"  >
       </div>
 	</div>
 	<div class="form-group">
         <label class="control-label col-sm-4" for="pwd">Endtime*:</label>
         <div class="col-sm-8">
             
-            <input type="text"   class="form-control" id="sample2"  placeholder="Enter End time  " name="etime" >
+            <input type="text"   class="form-control" id="timepicker2"  placeholder="Enter End time  " name="etime" >
            
       </div>
 	</div>
@@ -115,7 +124,7 @@ body{
         <label class="control-label col-sm-4" for="email">Custome*:</label>
         <div class="col-sm-8">
 
-            <input type="password" class="form-control" placeholder="Enter Code" name="custome"  >
+            <input type="text" class="form-control" placeholder="Enter Code" name="custome"  >
             
       </div>
 	</div>
@@ -151,29 +160,108 @@ body{
 </div>   
 </div> 
 
-<script> 
-    var y = <?php echo json_encode($code); ?>;
-    var x = <?php echo json_encode($name);?>;
+              <script>
+$(function() {
+    $( "#datepicker" ).datepicker({ minDate: 0});
+  });
 
+  </script>
+   <script>
+$(document).ready(function(){
 
-  
-    $(function() {
-    $( "#date" ).datepicker({ minDate: 0,maxDate:0});
-  })
- 
-  $(document).ready(function(){
-            // find the input fields and apply the time select to them.
-            $('#sample1').ptTimeSelect();
-        });  
-        $(document).ready(function(){
-            // find the input fields and apply the time select to them.
-            $('#sample2').ptTimeSelect();
-        }); 
-</script> 
+	  $('#timepicker').mdtimepicker();
 
+	});
+         </script>
+          <script>
+         $(document).ready(function(){
+
+	  $('#timepicker2').mdtimepicker();
+
+	});
+         </script>
+           <script>
+         $(document).ready(function(){
+
+	  $('#pass').mdtimepicker();
+
+	});
+         </script>
+           <script>
+         $(document).ready(function(){
+
+	  $('#pass2').mdtimepicker();
+
+	});
+         </script>
 </form   
 
 
 
+         
+       <?php  }else{?>
+        <div class="container-fluid"><br>
+
+  <section id="live">
+  <div class="row">
+    <div class="col-sm-4">
+       <div class="container">
+       
+       
+
+                                     
+</div>
+     </div>
+    <div>
+  
+     
+     </div>
+      <div class="col-sm-8" style="margin-top:-40px;margin-left:35em;">
+      <h1><b>Login</b></h1>
+        
+       <form action="<?php echo base_url(); ?>Welcome/loginCheckEmployee" method="post">
+           <font color="red"> <i><?php echo $this -> session->flashdata("Created"); ?></i></font>
+  <div class="form-group" >
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="width:250px;"required>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pass" style="width:250px;" required>
+  </div>
+  
+
+  
+  
+  <center> <font color="red"> <i><?php echo $this -> session->flashdata("managerlogin"); ?></i></font></center>
+
+  <p><i> <a href="<?php echo base_url(); ?>Welcome/employeeregister" style="color:white;">Register here</a></i>&nbsp; 
+  
+  <a href="<?php echo base_url(); ?>Welcome/adminlogin" style="color:white;">Admin Login</a></i></p>
+
+
+   <button type="submit" class="btn btn-info" role="button">login</button>
+  
+  
+</form>
+       
+    </div>
+    
+      <div class="col-sm-4">
+      
+    </div>
+    </div>
+  
+  </section>
+  
+  
+  
+  
+  
+  
+  
+  
+  </div>
+       <?php } ?>
 	</body>
 	</html>

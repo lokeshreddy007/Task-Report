@@ -256,11 +256,11 @@ html, body {
                       
 
       <li><a href="<?php echo base_url(); ?>Welcome/adminhome">Home</a></li>
-    <li><a href="">About Us</a></li>
+    <li><a href="<?php echo base_url(); ?>Welcome/employeeregister">Create Employee</a></li>
       <li><a href="">Projects</a></li>
       <li><a href="">Services</a></li>
         <li><a href="">Enquiry</a></li>
-       <!--<li><a href="">LOGOUT</a></li>-->
+       <li><a href="<?php echo base_url(); ?>Welcome/userLogout">Logout</a></li>
 
     </ul>
   </div>

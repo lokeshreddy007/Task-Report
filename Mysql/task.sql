@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 08, 2019 at 10:52 PM
+-- Generation Time: Jan 10, 2019 at 10:08 AM
 -- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- PHP Version: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -65,7 +65,8 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`id`, `fname`, `sname`, `phonenumber`, `mname`, `mcode`, `role`, `pass`, `cpass`, `mail`) VALUES
-(3, 'fyg', 'hari123@gmaul.com', '7897897897', 'admin', 123, '23423', '123', '123', 'lok@gmail.com');
+(4, 'lokesh', 'reddy', '123456789', 'admin', 123, 'software Developer', '123', '123', 'lokesh@gmail.com'),
+(5, 'Rajesh', 'reddy', '0987654321', 'admin', 123, 'software Developer', '123', '123', 'rajeshreddy@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -78,22 +79,31 @@ CREATE TABLE `report` (
   `empid` int(11) NOT NULL,
   `date` date NOT NULL,
   `strattime` varchar(255) NOT NULL,
-  `break` varchar(255) NOT NULL,
+  `breaks` varchar(255) NOT NULL,
   `endtime` varchar(255) NOT NULL,
   `rounding` varchar(500) NOT NULL,
   `total` varchar(500) NOT NULL,
   `custome` varchar(500) NOT NULL,
   `project` varchar(500) NOT NULL,
   `cat` varchar(250) NOT NULL,
-  `workdetails` varchar(1000) NOT NULL
+  `workdetails` varchar(1000) NOT NULL,
+  `breake` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `report`
 --
 
-INSERT INTO `report` (`reportid`, `empid`, `date`, `strattime`, `break`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`) VALUES
-(0, 3, '0000-00-00', '3:00 AM', '34', '10:00 AM', 'hari123@gmaul.com', '3424', '123', 'fcadsf', 'asdas', 'ascasfasfas\r\nfas\r\nf\r\nas\r\nfdas\r\nfd\r\nasfasf');
+INSERT INTO `report` (`reportid`, `empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`) VALUES
+(1, 3, '2019-01-10', '11:48 AM', '6:48 AM', '7:48 AM', 'rtrt', 'gdf', '54645gdfg', 'dfgfdsf', 'etry', 'dfgdfgdfgdf', '2:48 AM'),
+(2, 3, '2019-01-11', '1:49 PM', '7:49 PM', '7:25 PM', 'werwe', 'wrewer', 'wer', 'werewr', 'wer', 'werewrewrewrwerew\r\nwe\r\nrewr\r\new\r\nrew', '9:49 PM'),
+(3, 3, '2019-01-12', '8:51 AM', '9:51 PM', '8:51 PM', 'wsderww', 'erwe', 'rwer', 'ewr', 'ewr', 'ewrewr', '7:51 PM'),
+(4, 3, '2019-01-13', '7:53 PM', '8:53 PM', '8:53 PM', 'w43erq23w', '52435', '543', '534543', '535trrew', 'trewtrewtw', '3:53 PM'),
+(10, 4, '2019-01-10', '11:30 PM', '10:30 PM', '9:34 PM', 'werwer', 'wtewret', 'wrtre', 'ter', 'tertye', 'ryretyetryetytreuyr', '9:29 PM'),
+(11, 4, '2019-01-11', '10:31 PM', '9:35 PM', '9:31 PM', 'rwstger', 'retret', 'ret', 'retret', 'retre', 'tretret', ''),
+(12, 5, '2019-01-10', '10:35 PM', '10:35 PM', '9:35 PM', 'werwetw', 'twret', 'wrtwrt', 'wrtrw', 'trw', 'trwtrw', '9:35 PM'),
+(13, 5, '2019-01-11', '10:35 PM', '10:35 PM', '9:35 PM', 'rterte', 'rtre', 'tret', 'retretre', 'tre', 'tretretgret', '9:35 PM'),
+(14, 4, '2019-01-12', '2:36 PM', '2:36 PM', '2:36 PM', 'dsfdstg', 'retret', 'retret', 'retretreretre', 'retret', 'retret', '2:36 PM');
 
 --
 -- Indexes for dumped tables
@@ -125,13 +135,19 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `reportid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -12,7 +12,7 @@ body{
 		  background-image: url("<?php echo base_url();?>images/login.png");    
 		  background-size: cover;
 		  background-repeat: no-repeat;
-          margin:70px;
+          
 		  }
 .colorgraph {
   height: 5px;

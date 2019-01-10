@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 	public function employeeregister(){
+            $this->load->view('adminheader');
 		$this->load->model('Dbmodel');
 		$output = $this->Dbmodel->admincode();
       	$data['output'] = $output;
@@ -65,7 +66,7 @@ class Welcome extends CI_Controller {
 									   
 				if($item->name ==$name && $item->code ==$code){
 				  
-				  $this->session->set_userdata('sales','1');
+				  $this->session->set_userdata('adminuserid','helloadmin');
 				redirect(base_url() . 'Welcome/adminhome'); 
 				  
 				}
@@ -107,23 +108,28 @@ class Welcome extends CI_Controller {
 									   
 				if($item->mail ==$mail && $item->pass ==$pass){
 				  
-				  $this->session->set_userdata('userid',$item->id);
-				redirect(base_url() . 'Welcome/employeehome'); 
+				  $this->session->set_userdata('emploeeuserid',$item->id);
+                                  $this->session->set_userdata('emploeeusername',$item->fname);
+				redirect(base_url() . 'Welcome/employeehome?id='.$item->id); 
 				  
 				}
 			  }
 			}
 		  }
 		  public function employeehome(){
+                       
 			$this->load->view('employeeheader');
 			  $this->load->view('employeehome');
 
 		  }
-		  public function insertreport(){
-
-			$date= $this->input->post('date');
+        public function insertreport(){
+                      $emploeeuserid = $_SESSION['emploeeuserid'];  
+			$date= $this->input->post('fromdata');
+                          $time = strtotime($date);
+                        $date = date('Y-m-d',$time);
 			$stime=$this->input->post('stime');
-			$break=$this->input->post('break');
+			$breaks=$this->input->post('breakstart');
+                        $breake=$this->input->post('breakend');
 			$etime=$this->input->post('etime');
 			$rounding= $this->input->post('rounding');
 			 $total=$this->input->post('total');
@@ -133,17 +139,57 @@ class Welcome extends CI_Controller {
 			 $work=$this->input->post('work');
 			 $this->load->model('Dbmodel');
 	 
-				 $this->Dbmodel->insertdatareport($date,$stime,$break,$etime,$rounding,$total,$custome,$project,$cat,$work);
-				  $this->session->set_flashdata('Created','Account has been Created');
-				  redirect(base_url() .'Welcome/employeeregister');
-					 
-
+			 $this->Dbmodel->insertdatareport($emploeeuserid,$date,$stime,$breaks,$breake,$etime,$rounding,$total,$custome,$project,$cat,$work);
+			 $this->session->set_flashdata('Created','Account has been Created');
+		  redirect(base_url() .'Welcome/employeehome?id='.$emploeeuserid);			 
 		  }
+                  public function myreport(){
+                      
+                     $this->load->view('employeeheader');
+                     $this->load->model('Dbmodel');
+                      $output =  $this->Dbmodel->getreport();
+			$data['viewdata']=$output; 
+                     $this->load->view('employeereport',$data);
+                  }
 
+         public function userLogout()
+        {
+          $this->session->unset_userdata('emploeeuserid');
+          $this->session->unset_userdata('adminuserid');
+          $this->session->set_flashdata('userlogin','Successfully Logged out ');
+            redirect(base_url() );  
+        }
+        public function showinfo()
+        {
+          $this->load->view('adminheader');
+           $this->load->model('Dbmodel');
+            $output = $this->Dbmodel->getreport();
+            $employeename = $this->Dbmodel->emploee();
+              $data['employeename'] = $employeename;
+           $data['output'] = $output;
+           $this->load->view('showinfo',$data);				 		 
+        }
+        
+        public function getreportbydates()
+        {
+            $this->load->view('adminheader');
+            $empid= $this->input->post('id');
+            $fromdate=$this->input->post('fromdate');
+             $time = strtotime($fromdate);
+             $fromdate = date('Y-m-d',$time);
+            $enddate=$this->input->post('enddate');
+             $time = strtotime($enddate);
+               $enddate = date('Y-m-d',$time);
+           $this->load->model('Dbmodel');
+          $rangereport =  $this->Dbmodel->getreportbydates($empid,$fromdate,$enddate);
+//          print_r($rangereport);
+           $data['output'] = $rangereport;
+           $this->load->view('rangeouput',$data);	
+           		 		 
+        }
+        
 
-
-
-
+                   
 
 
 

@@ -67,7 +67,6 @@ color:white;
   
   <center> <font color="red"> <i><?php echo $this -> session->flashdata("managerlogin"); ?></i></font></center>
 
-  <p><i> <a href="<?php echo base_url(); ?>Welcome/employeeregister" style="color:white;">Register here</a></i>&nbsp; 
   
   <a href="<?php echo base_url(); ?>Welcome/adminlogin" style="color:white;">Admin Login</a></i></p>
 
