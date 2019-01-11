@@ -1,17 +1,17 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Emplyee report</title>
+		<title>Emplooyee report</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-             <link  href=" https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-             <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"></link>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link  href=" https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-             <style>
+    <style>
 	h1{
     margin-top: -40px;
     margin-bottom: 10px;
@@ -60,21 +60,24 @@
 	</style>
 	</head>
 	<body>
-             <?php $emploeeuserid = $_SESSION['emploeeuserid'];  ?>
-            <?php if(!empty($emploeeuserid)) {?>
+  <?php $id = intval($_GET['id']);?>
+
+<?php
+
+$emploeeuserid = $_SESSION['emploeeuserid'];  
+?>
+<?php if($id == $emploeeuserid){?>
 	<div class="container">
 			<div class="Back">
-			<INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
-				<!--<button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/Conformorder?id=<?php echo $id; ?>'" style="text-align: center;" type="button" class="btn btn-success">Next</button>-->
-				<?php if (!$this->session->userdata('Manager')) {?>
-				<button onclick="window.location.href='<?php echo base_url();?>UserControl/createmanagercode'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
-		<?php }  else {?>
-			<button onclick="window.location.href='<?php echo base_url();?>UserControl/createmanagercode'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
-
-		<?php } ?>
-
-			</div>
-	 <h1 style="text-align: center;"><b>My Report</b></h1>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Month</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>www/Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Week</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Year</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Next</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Add Entry</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Previous</button>
+            <INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
+                    </div>
+        <h1><b>Report</b></h1>
 			<div class="form-group">
 				<!-- <div class="input-group">
 					<span class="input-group-addon">Search</span>

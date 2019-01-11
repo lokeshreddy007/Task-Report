@@ -14,10 +14,10 @@ and open the template in the editor.
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 .text {
-  color: white;
-  font-size: 12px;
-  text-align: center;
-  padding:5px;
+   color: white;
+   font-size: 12px;
+   text-align: center;
+   padding:5px;
 }
 body {
    margin:0;
@@ -25,25 +25,28 @@ body {
    height:100%;
 }
 #container {
-    width: 350px;
-    color: #1e73b9;
-    height: auto;
-    padding:30px;
-    margin:auto;
+   border-style: solid;
+   border-width: 1px;
+   border-radius: 15px;
+   width: 350px;
+   color: #1e73b9;
+   height: auto;
+   padding:30px;
+   margin:auto;
 }
 #header {
-    padding:20px;
-    color: #1e73b9;
+   padding:20px;
+   color: #1e73b9;
 }
 #body {
-    padding:10px;
-    padding-bottom:60px;    /* Height of the footer */
+   padding:10px;
+   padding-bottom:60px;    /* Height of the footer */
 }
 #footer {
-   position:fixed;
+   position:absolute;
    bottom:0;
    width:100%;
-   height:50px;   /* Height of the footer */
+   height:30px;   /* Height of the footer */
    background:#6cf;
 }
 </style>
@@ -54,10 +57,9 @@ body {
         </div>
         <div id="body">
             <div id="container"><br>
-               <form action="<?php echo base_url(); ?>Welcome/loginCheckEmployee" method="post">
+            <form action="<?php echo base_url(); ?>Welcome/loginCheckEmployee" method="post">
            <font color="red"> <i><?php echo $this -> session->flashdata("Created"); ?></i></font>
-           <font color="red"> <i><?php echo $this -> session->flashdata("managerlogin"); ?></i></font>
-                    <font color="red"> <i></i></font>
+           <font color="red"> <i><?php echo $this -> session->flashdata("managerlogin"); ?></i></font>                    <font color="red"> <i></i></font>
                     <div class="form-group" >
                         <label for="email">Username/Email address:</label>
                         <input type="text" class="form-control" id="email" placeholder="Username/EmailAddress" name="email" required>
@@ -73,7 +75,7 @@ body {
             </div>
         </div>
         <div id="footer">
-            <div class="text"><h5><center>Copyright © 2019 All rights reserved</center></h5></div>
+            <div class="text"><h7><center>Copyright © 2019 All rights reserved</center></h7></div>
         </div>
     </body>
 </html>

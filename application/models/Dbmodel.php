@@ -50,13 +50,7 @@ class Dbmodel  extends CI_Model{
      $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$date','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
      $this->db->query($sql);  
     }
-//    public function getreportbydates($empid,$fromdate,$enddate){
-//        $this->db->where('empid',$empid);
-//        $this->db->where('pass',$fromdate);
-//        $this->db->where('pass',$enddate);
-//        $query=$this->db->get('report');
-//          return $query->result();
-//    }
+
     public function getreportbydates($empid,$fromdate,$enddate){
         $sql = "SELECT * FROM report WHERE date >= CAST('$fromdate' AS DATE) AND date <= CAST('$enddate' AS DATE) AND empid = '$empid'";
         return $this->db->query($sql)->result();
