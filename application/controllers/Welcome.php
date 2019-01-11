@@ -60,17 +60,7 @@ class Welcome extends CI_Controller {
 			  redirect(base_url() . 'Welcome/adminlogin');  
 			}
 			else{
-			  $output =  $this->Dbmodel->admincode();
-			  $data['viewdata']=$output; 
-			  foreach($data['viewdata'] as $item){
-									   
-				if($item->name ==$name && $item->code ==$code){
-				  
-				  $this->session->set_userdata('adminuserid','helloadmin');
-				redirect(base_url() . 'Welcome/adminhome'); 
-				  
-				}
-			  }
+			  
 			}
 		  }
 		  public function adminhome(){
@@ -95,26 +85,52 @@ class Welcome extends CI_Controller {
 			$mail= $this->input->post('email');
 			$pass=$this->input->post('pass'); 
 			$this->load->model('Dbmodel');
-			$managerData=$this->Dbmodel->Employeecode($mail,$pass);
-			if(empty($managerData)){
-			  echo "inside not value";
-			  $this->session->set_flashdata('managerlogin','Please Login with Valid username and password ');
-			  redirect(base_url());  
-			}
-			else{
-			  $output =  $this->Dbmodel->emploee();
+			$EmployeeData=$this->Dbmodel->Employeecode($mail,$pass);
+                        $managerData=$this->Dbmodel->managercode($mail,$pass);
+                        if(!empty($EmployeeData)){
+                            $emp = 1;
+                        }
+                        if(!empty($managerData)){
+                            $man = 1;
+                        }
+                        if($emp == 1){
+                            if(!empty($EmployeeData)){
+                                    $output =  $this->Dbmodel->emploee();
+                                  $data['viewdata']=$output; 
+                                  foreach($data['viewdata'] as $item){
+
+                                        if($item->mail ==$mail && $item->pass ==$pass){
+
+                                          $this->session->set_userdata('emploeeuserid',$item->id);
+                                          $this->session->set_userdata('emploeeusername',$item->fname);
+                                        redirect(base_url() . 'Welcome/employeehome?id='.$item->id); 
+
+                                        }
+                                  }
+                                }
+                        }
+                        elseif ($man == 1) {
+                        $output =  $this->Dbmodel->admincode();
 			  $data['viewdata']=$output; 
 			  foreach($data['viewdata'] as $item){
 									   
-				if($item->mail ==$mail && $item->pass ==$pass){
+				if($item->name ==$mail && $item->code ==$pass){
 				  
-				  $this->session->set_userdata('emploeeuserid',$item->id);
-                                  $this->session->set_userdata('emploeeusername',$item->fname);
-				redirect(base_url() . 'Welcome/employeehome?id='.$item->id); 
+				  $this->session->set_userdata('adminuserid','helloadmin');
+				redirect(base_url() . 'Welcome/adminhome'); 
 				  
 				}
 			  }
-			}
+                    }else{
+                          echo "inside not value";
+                         $this->session->set_flashdata('managerlogin','Please Login with Valid username and password ');
+                          redirect(base_url());  
+                           }
+                        
+                                
+                                
+                        
+                        
 		  }
 		  public function employeehome(){
                        

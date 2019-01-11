@@ -14,11 +14,11 @@ class Dbmodel  extends CI_Model{
      $query=$this->db->get('admin');
      return $query->result();
     }
-    public function  managercode($name,$code)
+    public function  managercode($mail,$pass)
             
     {
-                $this->db->where('name',$name);
-                $this->db->where('code',$code);
+                $this->db->where('name',$mail);
+                $this->db->where('code',$pass);
                 $query=$this->db->get('admin');
                 return $query->result();
                 
