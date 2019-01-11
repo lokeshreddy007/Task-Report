@@ -122,6 +122,7 @@
           <td><?php echo $data->project; ?> </td>
            <td><?php echo $data->cat; ?> </td>
             <td><?php echo $data->workdetails; ?> </td>
+            <?php $num ++;?>
                                         
                                        
                                         <tr/>

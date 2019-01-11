@@ -117,7 +117,7 @@
                                         
                                         <td><a href="<?php echo base_url();?>Welcome/showinfo?id=<?php echo $id; ?>"<i class="material-icons" style="font-size:20px">arrow_forward</i> 
 <td><a href="<?php echo base_url();?>Welcome/deleteemp?id=<?php echo $id; ?>"<span class="glyphicon glyphicon-trash"></span></a>
-
+ <?php $num ++;?>
                                         <tr/>
 					<?php } ?>
 					<tr>
