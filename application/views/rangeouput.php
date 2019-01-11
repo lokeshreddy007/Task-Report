@@ -64,6 +64,8 @@
 	</style>
 	</head>
 	<body>
+             <?php $adminuserid = $_SESSION['adminuserid'];  ?>
+            <?php if(!empty($adminuserid)) {?>
             <?php foreach($output as $data){ ?>
             <?php echo "Hello";?>
                <?php } ?>
@@ -153,7 +155,10 @@
 				</tbody>  
 </table>
 </div>
-
+  <?php } else{?>
+        
+         <?php redirect(base_url() ); ?>
+            <?php } ?>
 	</body>
          <script>
          $(function() {

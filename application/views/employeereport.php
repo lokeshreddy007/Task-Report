@@ -60,6 +60,8 @@
 	</style>
 	</head>
 	<body>
+             <?php $emploeeuserid = $_SESSION['emploeeuserid'];  ?>
+            <?php if(!empty($emploeeuserid)) {?>
 	<div class="container">
 			<div class="Back">
 			<INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
@@ -104,7 +106,7 @@
              </tr>
               <tbody >							
     
-	  <?php $emploeeuserid = $_SESSION['emploeeuserid'];  ?>
+	 
                 
 <tr>
 <?php $num = 1;?>
@@ -138,6 +140,10 @@
 </div>
 
 	</body>
+            <?php } else{?>
+        
+         <?php redirect(base_url() ); ?>
+            <?php } ?>
          <script>
                    var $rows = $('#table tr');
 $('#search').keyup(function() {

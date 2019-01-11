@@ -60,6 +60,8 @@
 	</style>
 	</head>
 	<body>
+              <?php $adminuserid = $_SESSION['adminuserid'];  ?>
+            <?php if(!empty($adminuserid)) {?>
 	<div class="container">
 			<div class="Back">
 			<INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
@@ -128,6 +130,10 @@
 				</tbody>  
 </table>
 </div>
+             <?php } else{?>
+        
+         <?php redirect(base_url() ); ?>
+            <?php } ?>
 
 	</body>
          <script>

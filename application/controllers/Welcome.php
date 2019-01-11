@@ -98,7 +98,6 @@ class Welcome extends CI_Controller {
                                     $output =  $this->Dbmodel->emploee();
                                   $data['viewdata']=$output; 
                                   foreach($data['viewdata'] as $item){
-
                                         if($item->mail ==$mail && $item->pass ==$pass){
 
                                           $this->session->set_userdata('emploeeuserid',$item->id);
@@ -172,6 +171,7 @@ class Welcome extends CI_Controller {
         {
           $this->session->unset_userdata('emploeeuserid');
           $this->session->unset_userdata('adminuserid');
+          $this->session->unset_userdata('emploeeusername');
           $this->session->set_flashdata('userlogin','Successfully Logged out ');
             redirect(base_url() );  
         }

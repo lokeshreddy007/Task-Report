@@ -20,6 +20,8 @@ body{
 		  background-image: url("<?php echo base_url();?>images/login.png");    
 		  background-size: cover;
 		  background-repeat: no-repeat;
+                  width:100%;
+                  height:100%;
 		  }
 .colorgraph {
   height: 5px;
@@ -38,6 +40,35 @@ body{
           margin-bottom: 10px;
           padding-right: 8%;
       }
+      .text {
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  padding:5px;
+}
+
+#container {
+    width: 350px;
+    color: #1e73b9;
+    height: auto;
+    padding:30px;
+    margin:auto;
+}
+#header {
+    padding:20px;
+    color: #1e73b9;
+}
+#body {
+    padding:10px;
+    padding-bottom:60px;    /* Height of the footer */
+}
+#footer {
+   position:fixed;
+   bottom:0;
+   width:100%;
+   height:50px;   /* Height of the footer */
+   background:#6cf;
+}
 </style>
 <script>
 
@@ -45,6 +76,7 @@ body{
 </script>
 </head>
 <body>
+    
         <?php $id = intval($_GET['id']);?>
 
     <?php
@@ -158,13 +190,11 @@ body{
        
 </div> 
 </div>   
-</div> 
-
+            </div>
               <script>
 $(function() {
     $( "#datepicker" ).datepicker({ minDate: 0});
   });
-
   </script>
    <script>
 $(document).ready(function(){
@@ -200,68 +230,8 @@ $(document).ready(function(){
 
          
        <?php  }else{?>
-        <div class="container-fluid"><br>
+     <?php redirect(base_url() ); ?>
 
-  <section id="live">
-  <div class="row">
-    <div class="col-sm-4">
-       <div class="container">
-       
-       
-
-                                     
-</div>
-     </div>
-    <div>
-  
-     
-     </div>
-      <div class="col-sm-8" style="margin-top:-40px;margin-left:35em;">
-      <h1><b>Login</b></h1>
-        
-       <form action="<?php echo base_url(); ?>Welcome/loginCheckEmployee" method="post">
-           <font color="red"> <i><?php echo $this -> session->flashdata("Created"); ?></i></font>
-  <div class="form-group" >
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" style="width:250px;"required>
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pass" style="width:250px;" required>
-  </div>
-  
-
-  
-  
-  <center> <font color="red"> <i><?php echo $this -> session->flashdata("managerlogin"); ?></i></font></center>
-
-  <p><i> <a href="<?php echo base_url(); ?>Welcome/employeeregister" style="color:white;">Register here</a></i>&nbsp; 
-  
-  <a href="<?php echo base_url(); ?>Welcome/adminlogin" style="color:white;">Admin Login</a></i></p>
-
-
-   <button type="submit" class="btn btn-info" role="button">login</button>
-  
-  
-</form>
-       
-    </div>
-    
-      <div class="col-sm-4">
-      
-    </div>
-    </div>
-  
-  </section>
-  
-  
-  
-  
-  
-  
-  
-  
-  </div>
        <?php } ?>
 	</body>
 	</html>
