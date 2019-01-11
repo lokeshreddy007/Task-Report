@@ -50,7 +50,7 @@ body {
 </head>
     <body>
         <div id="header">
-            <h2><center></font></center></h2>
+            <h2><center>Welcome to TimeSheet Portal</font></center></h2>
         </div>
         <div id="body">
             <div id="container"><br>
