@@ -170,8 +170,33 @@ class Welcome extends CI_Controller {
 		$enddate = date('Y-m-d',$time);
 		$this->load->model('Dbmodel');
 		$rangereport =  $this->Dbmodel->getreportbydates($empid,$fromdate,$enddate);
-		//print_r($rangereport);
 		$data['output'] = $rangereport;
 		$this->load->view('rangeouput',$data);
+	}
+	public function createmonthtable(){
+		$emploeeuserid = $_SESSION['emploeeuserid'];          
+		$this->load->model('Dbmodel');
+		$maxdata = $this->Dbmodel->report($emploeeuserid);
+		$data['viewdata']=$maxdata; 
+		$val = array();
+			foreach ($data['viewdata'] as $item){
+				array_push($val, $item->m);      
+		    }
+		$fin =  implode(" ",$val);
+		$date2 = date('Y-m-d', strtotime('+1 month', strtotime($fin)));
+		function dataRange($fin,$date2,$step='+1 day',$format='y-m-d'){
+			$dates = array();
+			$current = strtotime($fin);
+			$last = strtotime($date2);
+			while ($current <=$last){
+				$dates[] = date($format,$current);
+				$current = strtotime($step,$current);
+			}
+			return $dates;
+		}
+		$alldateslist = dataRange($fin,$date2);
+		$this->load->model('Dbmodel');
+		$this->Dbmodel->insertdatamonth($emploeeuserid,$alldateslist);
+		redirect(base_url() .'Welcome/employeereport?id='.$emploeeuserid);
 	}
 }

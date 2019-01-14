@@ -69,6 +69,7 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
 <?php if($id == $emploeeuserid){?>
 	<div class="container">
 			<div class="Back">
+      <button onclick="window.location.href='<?php echo base_url();?>Welcome/createmonthtable'" style="text-align: center;" type="button" class="btn btn-success">Month Table</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Month</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>www/Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Week</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Year</button>
@@ -118,7 +119,7 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
 	<td> <?php echo $num;?> </td>
 	<td><?php echo $data->date; ?> </td>
          <td><?php echo $data->strattime; ?> </td>
-         <td> <?php echo $data->breaks;?> to <?php echo $data->breaks;?></td>
+         <td> <?php echo $data->breaks;?></td>
 	<td><?php echo $data->endtime; ?> </td>
 	<td><?php echo $data->rounding; ?> </td>
         <td><?php echo $data->total; ?> </td>
