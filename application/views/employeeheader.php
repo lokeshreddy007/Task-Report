@@ -108,7 +108,7 @@ html, body {
         <div class="nav navbar-nav navbar"> Employee HomePage</div>
             <ul class="nav navbar-nav navbar-right">
             <li><a href="<?php echo base_url(); ?>Welcome/employeehome?id=<?php echo  $_SESSION['emploeeuserid'];?>">Home</a></li>
-                <li><a href="<?php echo base_url(); ?>/Welcome/myreport">Report</a></li>
+                <li><a href="<?php echo base_url(); ?>Welcome/myreport">Report</a></li>
                 <li><a href="<?php echo base_url(); ?>Welcome/userLogout">Logout</a></li>
             </ul>
         </div>

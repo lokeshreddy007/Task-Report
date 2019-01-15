@@ -83,6 +83,7 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
             <button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdaysforincrement'" style="text-align: center;" type="button" class="btn btn-success">Next</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Managementcontrol/Conformorder?id='" style="text-align: center;" type="button" class="btn btn-success">Add Entry</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdaysfordecrement'" style="text-align: center;" type="button" class="btn btn-success">Previous</button>
+            <button onclick="window.location.href='<?php echo base_url(); ?>Welcome/ExportCSV'" style="text-align: center;" type="button" class="btn btn-success">Export</button>
             <INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
                     </div>
         <h1><b>Report</b></h1>
