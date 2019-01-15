@@ -1,17 +1,21 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Emplooyee report</title>
+		<title>Emplyee report</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link  href=" https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"></link>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+             <link  href=" https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+             <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+             <style>
 	h1{
     margin-top: -40px;
     margin-bottom: 10px;
@@ -60,22 +64,11 @@
 	</style>
 	</head>
 	<body>
-  <?php $id = intval($_GET['id']);?>
+             <?php $emploeeuserid = $_SESSION['emploeeuserid'];  ?>
+            <?php if(!empty($emploeeuserid)) {?>
 
-<?php
-
-$emploeeuserid = $_SESSION['emploeeuserid'];  
-?>
-<?php
-
-
-
-// echo "Current week range from $this_week_sd to $this_week_ed ";
-?>
-
-<?php if($id == $emploeeuserid){?>
 	<div class="container">
-			<div class="Back">
+	<div class="Back">
       <button onclick="window.location.href='<?php echo base_url();?>Welcome/createmonthtable'" style="text-align: center;" type="button" class="btn btn-success">Month Table</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Welcome/monthdays'" style="text-align: center;" type="button" class="btn btn-success">Month</button>
             <button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdays'" style="text-align: center;" type="button" class="btn btn-success">Week</button>
@@ -90,7 +83,10 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
 			
 			</div>
 			<br />
-	
+            
+
+	 
+			
 <input type="text"  align="center" border="1px" style="width:100%; line-height: 30px;" id="search" placeholder=" Search Here">
 <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
             
@@ -118,8 +114,8 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
                 
 <tr>
 <?php $num = 1;?>
-				<?php foreach($viewdata as $data){ ?>
-    <?php if($data->empid == $emploeeuserid ){?>
+				<?php foreach($output as $data){ ?>
+    
 	<td> <?php echo $num;?> </td>
 	<td><?php echo $data->date; ?> </td>
          <td><?php echo $data->strattime; ?> </td>
@@ -132,11 +128,10 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
           <td><?php echo $data->project; ?> </td>
            <td><?php echo $data->cat; ?> </td>
             <td><?php echo $data->workdetails; ?> </td>
-            <?php $num ++;?>
-                                        
+                       <?php $num++;?>                 
                                        
                                         <tr/>
-					<?php } ?>
+					
                                         <?php } ?>
 					<tr>
 
@@ -146,12 +141,23 @@ $emploeeuserid = $_SESSION['emploeeuserid'];
 				</tbody>  
 </table>
 </div>
-
-	</body>
-            <?php } else{?>
+  <?php } else{?>
         
          <?php redirect(base_url() ); ?>
             <?php } ?>
+	</body>
+         <script>
+         $(function() {
+            $( "#datepicker-13" ).datepicker();
+            
+         });
+      </script>
+       <script>
+         $(function() {
+            $( "#datepicker-14" ).datepicker();
+           
+         });
+      </script>
          <script>
                    var $rows = $('#table tr');
 $('#search').keyup(function() {

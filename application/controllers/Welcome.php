@@ -143,6 +143,7 @@ class Welcome extends CI_Controller {
 	public function userLogout() {
 		$this->session->unset_userdata('emploeeuserid');
 		$this->session->unset_userdata('adminuserid');
+		$this->session->unset_userdata('lastdate');
 		$this->session->unset_userdata('emploeeusername');
 		$this->session->set_flashdata('userlogin','Successfully Logged out ');
 		redirect(base_url());  
@@ -194,9 +195,105 @@ class Welcome extends CI_Controller {
 			}
 			return $dates;
 		}
-		$alldateslist = dataRange($fin,$date2);
+		$lastDayThisMonth = date("Y-m-t");
+		if ($fin ==0){
+			echo "Fin is zero ";
+			$fin = date('y-m-d');
+		}
+		// echo $fin;
+		// echo $lastDayThisMonth;
+		$datetime1 = new DateTime($fin);
+		$datetime2 = new DateTime($lastDayThisMonth);
+		$interval = $datetime1->diff($datetime2);
+		$diffdateval =  $interval->format('%R%a days');
+		echo $interval->format('%R%a days');
+		if ($diffdateval > 1){
+			$alldateslist = dataRange($fin,$lastDayThisMonth);
+		}
+		// print_r($alldateslist);
+		$this->session->unset_userdata('lastdate');
 		$this->load->model('Dbmodel');
 		$this->Dbmodel->insertdatamonth($emploeeuserid,$alldateslist);
 		redirect(base_url() .'Welcome/employeereport?id='.$emploeeuserid);
+		// $this->load->view('checking');
+	}
+	public function weekdays(){
+		$this->load->view('employeeheader');
+		$empid = $_SESSION['emploeeuserid'];    
+		$monday = strtotime("last sunday");
+		$monday = date('w', $monday)==date('w') ? $monday+7*86400 : $monday;
+		$sunday = strtotime(date("Y-m-d",$monday)." +6 days");
+		$this_week_sd = date("Y-m-d",$monday);
+		$this_week_ed = date("Y-m-d",$sunday);
+		$this->session->unset_userdata('lastdate');
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getreportbydates($empid,$this_week_sd,$this_week_ed);
+		$data['output'] = $rangereport;
+		$this->load->view('emploeereporthome',$data);
+
+	}
+	public function monthdays(){
+		$this->load->view('employeeheader');
+		$empid = $_SESSION['emploeeuserid'];  
+		$query_date = date('y-m-d');
+		// First day of the month.
+		$this_week_sd =  date('Y-m-01', strtotime($query_date));
+		// Last day of the month.
+		$this_week_ed =  date('Y-m-t', strtotime($query_date));
+		// $this->load->view('checking');
+		$this->session->unset_userdata('lastdate');
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getreportbydates($empid,$this_week_sd,$this_week_ed);
+		$data['output'] = $rangereport;
+		$this->load->view('emploeereporthome',$data);
+
+	}
+	public function weekdaysforincrement(){
+		$this->load->view('employeeheader');
+		$empid = $_SESSION['emploeeuserid'];
+		$last = $_SESSION['lastdate']; 
+		if (empty($last)){
+			$NewDate = Date('y-m-d');
+			$nextweekdatestart =  date('Y-m-d', strtotime("Sunday " .$NewDate));
+			$end_date= date('Y-m-d', strtotime("saturday next week" .$NewDate));
+			$this->session->set_userdata('lastdate',$end_date);
+			echo $nextweekdatestart;
+			echo "<br/>";
+			echo $end_date;
+		}else{	
+			$NewDate = $last;
+			$nextweekdatestart =  date('Y-m-d', strtotime("Sunday " .$NewDate));
+			$end_date= date('Y-m-d', strtotime("saturday next week" .$NewDate));
+			$this->session->set_userdata('lastdate',$end_date);
+			echo $nextweekdatestart;
+			echo "<br/>";
+			echo $end_date;
+		}
+		// $this->load->view('checking');
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getreportbydates($empid,$nextweekdatestart,$end_date);
+		$data['output'] = $rangereport;
+		$this->load->view('emploeereporthome',$data);
+
+	}
+	public function weekdaysfordecrement(){
+		$this->load->view('employeeheader');
+		$empid = $_SESSION['emploeeuserid'];
+		$last = $_SESSION['lastdate']; 
+			if (!empty($last)){
+			$NewDate = $last;
+			$nextweekdatestart =  date('Y-m-d', strtotime("last Sunday " .$NewDate));
+			$end_date= date('Y-m-d', strtotime("saturday" .$nextweekdatestart));
+			$this->session->set_userdata('lastdate',$nextweekdatestart);
+			echo $nextweekdatestart;
+			echo "<br/>";
+			echo $end_date;
+		}
+		// $this->load->view('checking');
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getreportbydates($empid,$nextweekdatestart,$end_date);
+		$data['output'] = $rangereport;
+		$this->load->view('emploeereporthome',$data);
+
 	}
 }
