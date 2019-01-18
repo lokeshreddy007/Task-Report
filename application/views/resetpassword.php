@@ -65,13 +65,8 @@ body {
                         <label for="email">Username/Email address:</label>
                         <input type="text" class="form-control" id="email" placeholder="Username/EmailAddress" name="email" required>
                     </div>
-                    <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd" placeholder="Password" name="pass" required>
-                    </div>
                     <center> <font color="red"> <i></i></font></center>
-                    <p><i><a href="<?php echo base_url(); ?>Welcome/resetpassword">Forgot Password</a></i></p>
-                    <button type="submit" class="btn btn-info" role="button">Sign in</button>
+                    <button type="submit" class="btn btn-info" role="button">Forgot Password</button>
                 </form>
             </div>
         </div>

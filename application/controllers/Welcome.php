@@ -47,6 +47,29 @@ class Welcome extends CI_Controller {
 		}
 	}
 	
+    public function resetpassword() {
+        $this->load->model('Dbmodel');
+        $output = $this->Dbmodel->emploee();
+        $data['output'] = $output;
+        $this->load->view('resetpassword',$data);
+    }
+    
+    public function dashboard() {
+        $this->load->view('adminheader');
+        $this->load->model('Dbmodel');
+        $output = $this->Dbmodel->emploee();
+        $data['output'] = $output;
+        $this->load->view('dashboard',$data);
+    }
+	
+	public function projects() {
+        $this->load->view('adminheader');
+        $this->load->model('Dbmodel');
+        $output = $this->Dbmodel->emploee();
+        $data['output'] = $output;
+        $this->load->view('projects',$data);
+    }
+	
 	public function adminhome() {
 		$this->load->view('adminheader');
 		$this->load->model('Dbmodel');

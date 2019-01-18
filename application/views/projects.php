@@ -41,34 +41,35 @@
     <?php $adminuserid = $_SESSION['adminuserid'];  ?>
     <?php if(!empty($adminuserid)) {?>
     <div id="header">
-        <h2><center>Empolyee List</font></center></h2>
+        <h2><center>Projects List</font></center></h2>
     </div>
     <div id="container">
-        <input type="text"  align="center" border="1px" style="width:100%; line-height: 30px;" id="search" placeholder=" Search Here">
-        <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
+        <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">
+		    <tr>
+				<select style="width:150px; height:30px">
+				  <option value="None">None</option>
+				  <option value="Project 1">Project 1</option>
+				  <option value="Project 2">Project 2</option>
+				  <option value="Project 3">Project 3</option>
+				  <option value="Project 4">Project 4</option>
+				</select>
+            </tr>
             <tr>
-                <th>S.NO</th>
-                <th>First Name</th>
-                <th>Second Name</th> 
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Role </th>
-                <th>View</th>
-                <th>Delete</th>
+                <th>Customer</th>
+                <th>Category</th> 
+                <th>PO</th>
+                <th>Edit</th>
             </tr>
             <tbody >                            
             <tr>
                 <?php $num = 1;?>
                 <?php foreach($output as $data){ ?>
-                <td> <?php echo $num;?> </td>
-                <!--<td><a href="<?php echo base_url(); ?>Managementcontrol/followup?id=<?php echo $data->iduser; ?>" /> <?php echo $data->iduser; ?></td>-->   
                 <td><?php echo $data->fname; ?> </td>
                 <td><?php echo $data->sname; ?> </td>
                 <?php $id = $data->id;?>
                 <td><?php echo $data->mail; ?> </td>
                 <td><?php echo $data->phonenumber; ?> </td>
                 <td><?php echo $data->role; ?> </td>
-
                 <td><a href="<?php echo base_url();?>Welcome/showinfo?id=<?php echo $id; ?>"<i class="material-icons" style="font-size:20px">arrow_forward</i> 
                 <td><a href="<?php echo base_url();?>Welcome/deleteemp?id=<?php echo $id; ?>"<span class="glyphicon glyphicon-trash"></span></a>
                 <?php $num ++;?>
