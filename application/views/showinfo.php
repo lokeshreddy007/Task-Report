@@ -70,12 +70,8 @@
 			<div class="Back">
 <INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
 				<!--<button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/Conformorder?id=<?php echo $id; ?>'" style="text-align: center;" type="button" class="btn btn-success">Next</button>-->
-				<?php if (!$this->session->userdata('Manager')) {?>
-				<button onclick="window.location.href='<?php echo base_url();?>UserControl/createmanagercode'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
-		<?php }  else {?>
-			<button onclick="window.location.href='<?php echo base_url();?>UserControl/createmanagercode'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
+				<button onclick="window.location.href='<?php echo base_url();?>Welcome/adminhome'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
 
-		<?php } ?>
 			</div>
              <?php $id = intval($_GET['id']);?>
             <?php foreach($employeename as $data){ ?>
@@ -92,9 +88,10 @@
 			</div>
 			<br />
 	 <form class="form-inline" action="<?php echo base_url();?>Welcome/getreportbydates" method="post">
+   <input type="hidden" name="id" value="<?php echo $id;?> " />
+
   <div class="form-group">
       <p>Enter From Date: <input type = "text" name="fromdate" id = "datepicker-13"></p>
-      <input type="hidden" name="id" value="<?php echo $id;?> " />
   </div>
   <div class="form-group">
       <p>Enter To Date: <input type = "text" name="enddate" id = "datepicker-14"></p>		
@@ -119,9 +116,6 @@
                   <th>Project</th>
                    <th>cat</th>
                     <th>Work details</th>
-            
-           
-            
              </tr>
               <tbody >							
     

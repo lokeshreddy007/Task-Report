@@ -58,7 +58,16 @@ class Dbmodel  extends CI_Model{
     
     public function insertdatamonth($emploeeuserid,$alldateslist){
         $len = count($alldateslist);
-        for ($i=1;$i<$len;$i++){
+        for ($i=0;$i<$len;$i++){
+            $hello =  $alldateslist[$i];
+            echo $hello;
+            $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
+            $this->db->query($sql);
+        }
+    }
+    public function insertweekreport($emploeeuserid,$alldateslist){
+        $len = count($alldateslist);
+        for ($i=0;$i<$len;$i++){
             $hello =  $alldateslist[$i];
             $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
             $this->db->query($sql);

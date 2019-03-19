@@ -79,28 +79,7 @@
 			<button onclick="window.location.href='<?php echo base_url();?>UserControl/createmanagercode'" style="text-align: center;" type="button" class="btn btn-success">HOME</button>
 
 		<?php } ?>
-			</div>
-            
-
-	 <h1 style="text-align: center;"><b><?php echo $name;?> Report</b></h1>
-			<div class="form-group">
-				<!-- <div class="input-group">
-					<span class="input-group-addon">Search</span>
-					<input type="text" name="search_text" id="search_text" placeholder="Search by Customer Details" class="form-control" />
-				</div> -->
-			</div>
-			<br />
-	 <form class="form-inline" action="<?php echo base_url();?>Welcome/getreportbydates" method="post">
-  <div class="form-group">
-      <p>Enter From Date: <input type = "text" name="fromdate" id = "datepicker-13"></p>
-      <input type="hidden" name="id" value="<?php echo $id;?> " />
-  </div>
-  <div class="form-group">
-      <p>Enter To Date: <input type = "text" name="enddate" id = "datepicker-14"></p>		
-  </div>
-             <div class="form-group">
-    <button type="submit" class="btn btn-primary">submit</button>  </div>
-</form> 
+			</div>	 
 <input type="text"  align="center" border="1px" style="width:100%; line-height: 30px;" id="search" placeholder=" Search Here">
 <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
             

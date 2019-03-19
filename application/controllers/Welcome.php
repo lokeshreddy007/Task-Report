@@ -129,12 +129,7 @@ class Welcome extends CI_Controller {
 		}
 	}
 	
-	public function employeehome() {
-		$this->load->view('employeeheader');
-		$this->load->view('employeehome');
-	}
-	
-	public function insertreport() {
+		public function insertreport() {
 		$emploeeuserid = $_SESSION['emploeeuserid'];  
 		$date= $this->input->post('fromdata');
 		$time = strtotime($date);
@@ -157,9 +152,50 @@ class Welcome extends CI_Controller {
 	
 	public function employeereport() {
 		$this->load->view('employeeheader');
+		$empid = $_SESSION['emploeeuserid'];
 		$this->load->model('Dbmodel');
-		$output =  $this->Dbmodel->getreport();
-		$data['viewdata']=$output; 
+		$monday = strtotime("last sunday");
+		$monday = date('w', $monday)==date('w') ? $monday+7*86400 : $monday;
+		$sunday = strtotime(date("Y-m-d",$monday)." +6 days");
+		$this_week_sd = date("Y-m-d",$monday);
+		$this_week_ed = date("Y-m-d",$sunday);
+		echo $this_week_sd;
+		echo $this_week_ed;
+		// check if the lenght of the output is more than 1 display data else create data
+		$rangereport =  $this->Dbmodel->getreportbydates($empid,$fromdate,$enddate);
+		if($rangereport.length > 0) {
+			echo "present...";
+			$data['viewdata']=$rangereport; 
+		} else {
+			echo "nono...";
+			$empid = $_SESSION['emploeeuserid'];
+			echo $empid;    
+			$monday = strtotime("last sunday");
+			$monday = date('w', $monday)==date('w') ? $monday+7*86400 : $monday;
+			$sunday = strtotime(date("Y-m-d",$monday)." +6 days");
+			$this_week_sd = date("Y-m-d",$monday);
+			$this_week_ed = date("Y-m-d",$sunday);
+
+			function date_range($first, $last, $step = '+1 day', $output_format = 'd-m-Y' ) {
+				$dates = array();
+				$current = strtotime($first);
+				$last = strtotime($last);
+				while( $current <= $last ) {
+					$dates[] = date($output_format, $current);
+					$current = strtotime($step, $current);
+				}
+				return $dates;
+			}
+			$alldate = date_range($this_week_sd,$this_week_ed);
+			print_r($alldate);
+			$this->load->model('Dbmodel');
+			$this->Dbmodel->insertdatamonth($empid,$alldate);
+			// $data['output'] = $rangereport;
+		}
+		// $timestamp = strtotime($this_week_sd);
+		// $day = date('l', $timestamp);
+		// echo $day;
+				
 		$this->load->view('employeereport',$data);
 	}
 	
@@ -192,9 +228,13 @@ class Welcome extends CI_Controller {
 		$enddate=$this->input->post('enddate');
 		$time = strtotime($enddate);
 		$enddate = date('Y-m-d',$time);
+		echo $fromdate;
+		echo $enddate;
+		echo $empid;
 		$this->load->model('Dbmodel');
 		$rangereport =  $this->Dbmodel->getreportbydates($empid,$fromdate,$enddate);
 		$data['output'] = $rangereport;
+		print_r($rangereport);
 		$this->load->view('rangeouput',$data);
 	}
 	public function createmonthtable(){
@@ -333,14 +373,31 @@ class Welcome extends CI_Controller {
         force_download($filename, $data);
 	}
 
-	public function getdatainajax() {
-		$id = intval($_GET['id']);
-		// echo $id;
-		echo json_encode($id);
-		$this->load->model('Dbmodel');
-		$this->load->view('employeereport');
+	public function editreport() {
+		$this->load->view('employeeheader');
+		$this->load->view('editreport');
 	}
 	
+	public function insertreportedit() {
+		$emploeeuserid = $_SESSION['emploeeuserid'];  
+		$date= $this->input->post('fromdata');
+		$time = strtotime($date);
+		$date = date('Y-m-d',$time);
+		$stime=$this->input->post('stime');
+		$breaks=$this->input->post('breakstart');
+		$breake=$this->input->post('breakend');
+		$etime=$this->input->post('etime');
+		$rounding= $this->input->post('rounding');
+		$total=$this->input->post('total');
+		$custome=$this->input->post('custome');
+		$project=$this->input->post('project');
+		$cat=$this->input->post('cat');
+		$work=$this->input->post('work');
+		$this->load->model('Dbmodel');
+		$this->Dbmodel->insertdatareport($emploeeuserid,$date,$stime,$breaks,$breake,$etime,$rounding,$total,$custome,$project,$cat,$work);
+		$this->session->set_flashdata('Created','Report has submitted');
+		redirect(base_url() .'Welcome/employeereport?id='.$emploeeuserid);		
+	}
 	
 
 }
