@@ -45,7 +45,7 @@
     </div>
     <div id="container">
         <input type="text"  align="center" border="1px" style="width:100%; line-height: 30px;" id="search" placeholder=" Search Here">
-        <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
+        <table  class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
             <tr>
                 <th>S.NO</th>
                 <th>First Name</th>
@@ -56,7 +56,7 @@
                 <th>View</th>
                 <th>Delete</th>
             </tr>
-            <tbody >                            
+            <tbody id="table" >                            
             <tr>
                 <?php $num = 1;?>
                 <?php foreach($output as $data){ ?>
@@ -79,7 +79,7 @@
         </table>
     </div>
 	<div id="footer">
-		<div class="text"><h7><center>Copyright © 2019 All rights reserved</center></h7></div>
+		<div class="text"><h7><center>Copyright © <?php echo date("Y"); ?> All rights reserved</center></h7></div>
     </div>
     <?php } else { ?>
     <?php redirect(base_url() ); ?>

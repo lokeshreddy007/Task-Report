@@ -80,7 +80,7 @@
         </table>
     </div>
 	<div id="footer">
-		<div class="text"><h7><center>Copyright © 2019 All rights reserved</center></h7></div>
+		<div class="text"><h7><center>Copyright © <?php echo date("Y"); ?> All rights reserved</center></h7></div>
     </div>
     <?php } else { ?>
     <?php redirect(base_url() ); ?>

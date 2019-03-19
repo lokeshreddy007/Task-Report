@@ -133,7 +133,9 @@ function myconpass() {
                 <input class="form-control" id="add" placeholder="Enter Address" name="role" >
             </div>
         </div>
-        <button  id ="pay" type="submit" class="btn btn-primary">Submit</button>
+		<div style="text-align: center;">
+        <button  id ="pay" type="submit"  class="btn btn-primary">Submit</button>
+		</div>
     </form>
     <script> 
         var y = <?php echo json_encode($code); ?>;
@@ -185,7 +187,7 @@ function myconpass() {
     </script>
     </div>
     <div id="footer">
-        <div class="text"><h7><center>Copyright © 2019 All rights reserved</center></h7></div>
+        <div class="text"><h7><center>Copyright © <?php echo date("Y"); ?> All rights reserved</center></h7></div>
     </div>
     </body>
 </html>

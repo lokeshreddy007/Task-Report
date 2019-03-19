@@ -11,6 +11,8 @@
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+				<link rel="stylesheet" href="<?php echo base_url();?>imports/mdtimepicker.css">
+<script src="<?php echo base_url();?>imports/mdtimepicker.js"></script>
 				<style type="text/css">
 					.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;margin:0px auto;border: 5px solid #26ADE4;border-radius: 10px;}
 					.tg td{font-family:Arial, sans-serif;font-size:14px;padding:5px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#444;background-color:#F7FDFA;}
@@ -61,6 +63,7 @@
 								<?php $num = 1;?>
 								<?php foreach($viewdata as $data){ ?>
 								<?php if($data->empid == $emploeeuserid ){?>
+								
 								<td class="tg-0pky"><?php echo $data->date;?></td>
 								<td class="tg-0pky"><?php echo $data->strattime;?></td>
 								<td class="tg-0pky">
@@ -81,8 +84,93 @@
 										<?php echo $data->workdetails;?>
 									</textarea>
 								</td>
+								
+				 <!-- Modal container start from here  -->		
+				
+				<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><?php echo $data->project;?></h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+                <label class="control-label col-sm-4" for="pwd">Start time*</label>
+                <div class="col-sm-8">
+                    <input type="text"  class="form-control" id="timepicker" placeholder="Enter Start Time" name="stime"/>
+                </div>
+            </div>
+			</br> </br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="pwd">Break*:</label>
+                <div class="col-sm-8">
+                    <input type="text"   class="form-control" id="pass" placeholder=" Form" name="breakstart">
+                </div>   
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="pwd">Endtime*:</label>
+                <div class="col-sm-8">
+                    <input type="text"   class="form-control" id="timepicker2"  placeholder="Enter End time  " name="etime" >
+                </div>
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="pwd">Rounding*</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="myInput"   placeholder="Enter Rounding" name="rounding">
+                </div>
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Total*:</label>
+                <div class="col-sm-8">
+                    <input type="pass" class="form-control"  placeholder="Enter Total" name="total">
+                </div>
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Custome*:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Enter Code" name="custome"  >
+                </div>
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Project*:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="phone"    placeholder="Enter project" name="project">
+                <p id="phone"></p>
+                </div>
+            </div>
+			</br></br>
+            <div class="form-group">
+                <label class="control-label col-sm-4" for="pwd">workdetails*</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="pwd" placeholder="Enter workdetails" name="work"></textarea>
+                </div>
+            </div>
+        </div>
+		</br></br>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <input type="button" value="Submit" onclick="window.location.href='<?php echo base_url();?>/Welcome/insertdata?id<?php echo $data->project;?>'" />
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+							<!-- Modal container end  from here  -->	
 								<td class="tg-0pky">
-									<button style="text-align: center;" type="button" class="btn btn-success">Edit</button>
+									<button id="edit" style="text-align: center;" type="button" value="<?php echo $data->date;?> " class="btn btn-success" data-toggle="modal" data-target="#myModal">Edit</button>
 								</td>
 								<?php $num ++;?>
 								<tr/>
@@ -90,11 +178,41 @@
 								<?php } ?>
 							</tr>
 						</table></div>
-				</div>
+				</div>			
 			</body>
 			<?php } else{?>
 			<?php redirect(base_url() ); ?>
 			<?php } ?>
+			
+			<script>
+    $(function() {
+        $( "#datepicker" ).datepicker({ minDate: 0});
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#timepicker').mdtimepicker();
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#timepicker2').mdtimepicker();
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#pass').mdtimepicker();
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#pass2').mdtimepicker();
+    });
+	$("#edit").click(function(){
+		console.log(document.getElementById("edit").value );
+}); 
+</script>
+			
 			<script>
 				var $rows = $('#table tr');
 				$('#search').keyup(function() {

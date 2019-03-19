@@ -319,8 +319,8 @@ class Welcome extends CI_Controller {
 		$this->load->view('emploeereporthome',$data);
 
 	}
-	public function ExportCSV()
-{
+	
+	public function ExportCSV() {
         $this->load->dbutil();
         $this->load->helper('file');
         $this->load->helper('download');
@@ -331,6 +331,16 @@ class Welcome extends CI_Controller {
         $result = $this->db->query($query);
         $data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
         force_download($filename, $data);
-}
+	}
+
+	public function getdatainajax() {
+		$id = intval($_GET['id']);
+		// echo $id;
+		echo json_encode($id);
+		$this->load->model('Dbmodel');
+		$this->load->view('employeereport');
+	}
+	
+	
 
 }

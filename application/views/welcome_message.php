@@ -76,7 +76,7 @@ body {
             </div>
         </div>
         <div id="footer">
-            <div class="text"><h7><center>Copyright © 2019 All rights reserved</center></h7></div>
+            <div class="text"><h7><center>Copyright © <?php echo date("Y"); ?> All rights reserved</center></h7></div>
         </div>
     </body>
 </html>
