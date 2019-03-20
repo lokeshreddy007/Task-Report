@@ -2,7 +2,7 @@
 
 
 class Dbmodel  extends CI_Model{
-    
+
      public function  registerdata($fname,$sname,$pass,$spass,$mail,$name,$code,$phone,$role){
         $sql="insert into register(`fname`, `sname`, `phonenumber`, `mname`, `mcode`, `role`, `pass`, `cpass`, `mail`)VALUES ('$fname','$sname','$phone','$name','$code','$role','$pass','$spass','$mail')";
         $this->db->query($sql);
@@ -17,7 +17,7 @@ class Dbmodel  extends CI_Model{
         $this->db->where('name',$mail);
         $this->db->where('code',$pass);
         $query=$this->db->get('admin');
-        return $query->result();                
+        return $query->result();
     }
 
     public function emploee(){
@@ -40,40 +40,51 @@ class Dbmodel  extends CI_Model{
         $query=$this->db->get('register');
         return $query->result();
     }
-
-    public function insertdatareport($emploeeuserid,$date,$stime,$breaks,$breake,$etime,$rounding,$total,$custome,$project,$cat,$work){                                          
-        $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$date','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
-        $this->db->query($sql);  
-    }
-
-    public function getreportbydates($empid,$fromdate,$enddate){
-        $sql = "SELECT * FROM report WHERE date >= CAST('$fromdate' AS DATE) AND date <= CAST('$enddate' AS DATE) AND empid = '$empid'";
-        return $this->db->query($sql)->result();
-    }
-
-    public function  report($emploeeuserid){
-        $sql = "SELECT MAX(date) as m FROM `report` WHERE empid = '$emploeeuserid' ";
-        return $this->db->query($sql)->result();
-    }
-    
-    public function insertdatamonth($emploeeuserid,$alldateslist){
+	 public function insertdatamonth($emploeeuserid,$alldateslist){
         $len = count($alldateslist);
         for ($i=0;$i<$len;$i++){
-            $hello =  $alldateslist[$i];
-            echo $hello;
-            $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
+           $time = strtotime($alldateslist[$i]);
+			$hello = date('Y-m-d',$time);
+            $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work')";
             $this->db->query($sql);
         }
     }
     public function insertweekreport($emploeeuserid,$alldateslist){
         $len = count($alldateslist);
         for ($i=0;$i<$len;$i++){
-            $hello =  $alldateslist[$i];
-            $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
+			$time = strtotime($alldateslist[$i]);
+			$hello = date('Y-m-d',$time);
+			//echo $hello;
+            //$sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `breake`)VALUES ('$emploeeuserid','$hello','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work','$breake')";
             $this->db->query($sql);
         }
     }
+
+    public function insertdatareport($emploeeuserid,$date,$stime,$breaks,$breake,$etime,$rounding,$total,$custome,$project,$cat,$work){
+        $sql="insert into report(`empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`)VALUES ('$emploeeuserid','$date','$stime','$breaks','$etime','$rounding','$total','$custome','$project','$cat','$work')";
+        $this->db->query($sql);
+    }
+
+    public function getreportbydates($empid,$fromdate,$enddate){
+        $sql = "SELECT * FROM report WHERE date >= CAST('$fromdate' AS DATE) AND date <= CAST('$enddate' AS DATE) AND empid = '$empid' ORDER BY date ASC";
+	   return $this->db->query($sql)->result();
+    }
+
+    public function  report($emploeeuserid){
+        $sql = "SELECT MAX(date) as m FROM `report` WHERE empid = '$emploeeuserid' ";
+        return $this->db->query($sql)->result();
+    }
+
+    public function getreportedit($emploeeuserid,$iddate) {
+      $sql = "SELECT * FROM `report` WHERE empid = '$emploeeuserid' and date = '$iddate'";
+      return $this->db->query($sql)->result();
+    }
+
+    public function updatedatareport($emploeeuserid,$stime,$breaks,$presntdata,$etime,$rounding,$total,$custome,$project,$cat,$work) {
+// `empid`, `date`, `strattime`, `breaks`, `endtime`, `rounding`, `total`, `custome`, `project`, `cat`, `workdetails`, `day`
+      $sql="UPDATE  `report` SET `empid`='$emploeeuserid',`date`='$presntdata',`strattime`='$stime',`breaks`='$breaks',`endtime`='$etime',`rounding`='$rounding',`total`='$total',`custome`='$custome',`project`='$project',`cat`='$cat',
+      `workdetails`='$work' WHERE `empid`= '$emploeeuserid' and `date`= '$presntdata' ";
+          $this->db->query($sql);
+    }
+
 }
-
-
-    

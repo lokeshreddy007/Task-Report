@@ -107,6 +107,7 @@ html, body {
         <div class="container-fluid">
         <div class="nav navbar-nav navbar"> Employee HomePage</div>
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="<?php echo base_url(); ?>Welcome/employeereport?id=<?php echo  $_SESSION['emploeeuserid'];?>"> <?php echo $_SESSION['emploeeusername'];?></li></a></li>
             <li><a href="<?php echo base_url(); ?>Welcome/employeereport?id=<?php echo  $_SESSION['emploeeuserid'];?>">Home</a></li>
                 <li><a href="<?php echo base_url(); ?>Welcome/userLogout">Logout</a></li>
             </ul>
