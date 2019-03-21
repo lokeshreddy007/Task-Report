@@ -86,5 +86,9 @@ class Dbmodel  extends CI_Model{
       `workdetails`='$work' WHERE `empid`= '$emploeeuserid' and `date`= '$presntdata' ";
           $this->db->query($sql);
     }
+    public function getdata() {
+    $sql =   "SELECT * FROM `report` WHERE empid = 4 ";  
+        return $this->db->query($sql)->result();
+    }
 
 }

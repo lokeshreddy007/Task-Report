@@ -3,16 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
+	function __Construct(){
+        parent::__Construct();
+        $this->load->helper('download');
+        // $this->load->library('PHPReport');
+
+        }
+
 	public function index() {
 		$this->load->view('welcome_message');
 	}
 
+	public function employeelist() {
+    $this->load->view('adminheader');
+		$this->load->model('Dbmodel');
+		$output = $this->Dbmodel->emploee();
+		$data['output'] = $output;
+		$this->load->view('employeelist',$data);
+	}
 	public function employeeregister() {
-        $this->load->view('adminheader');
+		$this->load->view('adminheader');
 		$this->load->model('Dbmodel');
 		$output = $this->Dbmodel->admincode();
-      	$data['output'] = $output;
+		$data['output'] = $output;
 		$this->load->view('employeeregister',$data);
+
 	}
 
 	public function adminlogin() {
@@ -82,7 +97,7 @@ class Welcome extends CI_Controller {
 		$id = intval($_GET['id']);
 		$this->load->model('Dbmodel');
 		$files= $this->Dbmodel->deleteemp($id);
-		redirect(base_url() . 'Welcome/adminhome');
+		redirect(base_url() . 'Welcome/dashboard');
 	}
 
 	public function loginCheckEmployee() {
@@ -105,6 +120,8 @@ class Welcome extends CI_Controller {
 					if ($item->mail ==$mail && $item->pass ==$pass) {
 						$this->session->set_userdata('emploeeuserid',$item->id);
             $this->session->set_userdata('emploeeusername',$item->fname);
+						$this->session->set_userdata('duration',"Week");
+
             $output =  $this->Dbmodel->getreport();
 		        $data['viewdata']=$output;
 						redirect(base_url() . 'Welcome/employeereport?id='.$item->id,$data);
@@ -118,7 +135,7 @@ class Welcome extends CI_Controller {
 			foreach($data['viewdata'] as $item){
 				if($item->name ==$mail && $item->code ==$pass){
 					$this->session->set_userdata('adminuserid','helloadmin');
-					redirect(base_url() . 'Welcome/adminhome');
+					redirect(base_url() . 'Welcome/dashboard');
 				}
 			}
 		}
@@ -338,15 +355,15 @@ class Welcome extends CI_Controller {
 		$data['output'] = $rangereport;
 		$datarow = array();
 		foreach ($data['output'] as $item){
-		// array_push($datarow, $item->date);
+		array_push($datarow, $item->date);
 		}
 		// echo "</br>";
 		// print_r($datarow);
 		// echo gettype($datarow);
-		
+
 		// echo "</br>";
 		// echo "comparing....";
-		
+
 		$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
 		// print_r($alldateslist);
 		if(empty($alldateslist)){   //		if(empty($alldateslist)){
@@ -389,14 +406,20 @@ class Welcome extends CI_Controller {
 		$duration = $_SESSION['duration'];
 		// echo $duration;
 		if($duration == "Week") {
-			if (!empty($last)){
+			if (empty($last)){
 			$NewDate = $last;
-			$this_week_sd =  date('Y-m-d', strtotime("last Sunday " .$NewDate));
-			$this_week_ed= date('Y-m-d', strtotime("saturday" .$this_week_sd));
+			$this_week_sd =  date('Y-m-d', strtotime("monday " .$NewDate));
+			$this_week_ed= date('Y-m-d', strtotime("sunday" .$this_week_sd));
 			$this->session->set_userdata('lastdate',$this_week_sd);
 			// echo $this_week_sd;
 			// echo "<br/>";
 			// echo $this_week_ed;
+		} else {
+			$NewDate = $last;
+			$this_week_sd =  date('Y-m-d', strtotime("last Sunday " .$NewDate));
+			$this_week_ed= date('Y-m-d', strtotime("saturday" .$this_week_sd));
+			$this->session->set_userdata('lastdate',$this_week_sd);
+
 		}
 		// $this->load->view('checking');
 		$this->load->model('Dbmodel');
@@ -424,117 +447,117 @@ class Welcome extends CI_Controller {
 		$rangereport =  $this->Dbmodel->getreportbydates($empid,$this_week_sd,$this_week_ed);
 		$data['viewdata']=$rangereport;
 	}
-}else {
-	$empid = $_SESSION['emploeeuserid'];
-	// echo $empid;
-	$wantedmonth1 = $_SESSION['wantedmonth1'];
-	$wantedmonth2 = $_SESSION['wantedmonth2'];
-	if(!(isset($wantedmonth1))) {
-	$val = date('Y-m-01'); // hard-coded '01' for first day
-	// echo $val;
-	$end_date = date('Y-m-t');
-	// echo $end_date;
-	$this->session->set_userdata('wantedmonth1',$val);
-	$this->session->set_userdata('wantedmonth2',$end_date);
-	// echo $_SESSION['wantedmonth1'];
-	// echo $_SESSION['wantedmonth2'];
-	// echo "session";
-	// $final = date("Y-m-d", strtotime("+1 month", $time));
-	// echo $final;
-	function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
-	$dates = array();
-	$current = strtotime($first);
-	$last = strtotime($last);
-	while( $current <= $last ) {
-	$dates[] = date($output_format, $current);
-	$current = strtotime($step, $current);
-	}
-	return $dates;
-	}
-	$alldate = date_range($val,$end_date);
-	// echo gettype($alldate);
-	// print_r($alldate);
-	$this->load->model('Dbmodel');
-	$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
-	$data['output'] = $rangereport;
-	$datarow = array();
-	foreach ($data['output'] as $item){
-	array_push($datarow, $item->date);
-	}
-	// echo "</br>";
-	// print_r($datarow);
-	// echo gettype($datarow);
+	}else {
+				$empid = $_SESSION['emploeeuserid'];
+				// echo $empid;
+				$wantedmonth1 = $_SESSION['wantedmonth1'];
+				$wantedmonth2 = $_SESSION['wantedmonth2'];
+				if(!(isset($wantedmonth1))) {
+				$val = date('Y-m-01'); // hard-coded '01' for first day
+				// echo $val;
+				$end_date = date('Y-m-t');
+				// echo $end_date;
+				$this->session->set_userdata('wantedmonth1',$val);
+				$this->session->set_userdata('wantedmonth2',$end_date);
+				// echo $_SESSION['wantedmonth1'];
+				// echo $_SESSION['wantedmonth2'];
+				// echo "session";
+				// $final = date("Y-m-d", strtotime("+1 month", $time));
+				// echo $final;
+				function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
+				$dates = array();
+				$current = strtotime($first);
+				$last = strtotime($last);
+				while( $current <= $last ) {
+					$dates[] = date($output_format, $current);
+					$current = strtotime($step, $current);
+				}
+				return $dates;
+				}
+				$alldate = date_range($val,$end_date);
+				// echo gettype($alldate);
+				// print_r($alldate);
+				$this->load->model('Dbmodel');
+				$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
+				$data['output'] = $rangereport;
+				$datarow = array();
+				foreach ($data['output'] as $item){
+				array_push($datarow, $item->date);
+				}
+				// echo "</br>";
+				// print_r($datarow);
+				// echo gettype($datarow);
 
-	// echo "</br>";
-	// echo "comparing....";
+				// echo "</br>";
+				// echo "comparing....";
 
-	$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
-	print_r($alldateslist);
-	if(empty($alldateslist)){
-	// echo "empty...";
-	$this->load->model('Dbmodel');
-	$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
-	$data['viewdata'] = $rangereport;
-	} else {
-	$this->load->model('Dbmodel');
-	$this->Dbmodel->insertdatamonth($empid,$alldateslist);
-	$this->load->model('Dbmodel');
-	$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
-	$data['viewdata']=$rangereport;
-	}
+				$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
+				print_r($alldateslist);
+				if(empty($alldateslist)){
+				// echo "empty...";
+				$this->load->model('Dbmodel');
+				$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
+				$data['viewdata'] = $rangereport;
+				} else {
+				$this->load->model('Dbmodel');
+				$this->Dbmodel->insertdatamonth($empid,$alldateslist);
+				$this->load->model('Dbmodel');
+				$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
+				$data['viewdata']=$rangereport;
+				}
 
-	} else {
-		// echo $wantedmonth1;
-		$end_date = date ("Y-m-d", strtotime("-1 day", strtotime($wantedmonth1)));
-		// echo $end_date;
-		$val = date('Y-m-01', strtotime($end_date));
-		// echo $val;
-		$this->session->set_userdata('wantedmonth1',$val);
-		$this->session->set_userdata('wantedmonth2',$end_date);
-		// echo $_SESSION['wantedmonth1'];
-		// echo "session";
-			function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
-			$dates = array();
-			$current = strtotime($first);
-			$last = strtotime($last);
-			while( $current <= $last ) {
+				} else {
+				// echo $wantedmonth1;
+				$end_date = date ("Y-m-d", strtotime("-1 day", strtotime($wantedmonth1)));
+				// echo $end_date;
+				$val = date('Y-m-01', strtotime($end_date));
+				// echo $val;
+				$this->session->set_userdata('wantedmonth1',$val);
+				$this->session->set_userdata('wantedmonth2',$end_date);
+				// echo $_SESSION['wantedmonth1'];
+				// echo "session";
+				function date_range($first, $last, $step = '+1 day', $output_format = 'Y-m-d' ) {
+				$dates = array();
+				$current = strtotime($first);
+				$last = strtotime($last);
+				while( $current <= $last ) {
 				$dates[] = date($output_format, $current);
 				$current = strtotime($step, $current);
-			}
-		return $dates;
-		}
-		$alldate = date_range($val,$end_date);
-		// echo gettype($alldate);
-		// print_r($alldate);
-		$this->load->model('Dbmodel');
-		$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
-		$data['output'] = $rangereport;
-		$datarow = array();
-		foreach ($data['output'] as $item){
-		array_push($datarow, $item->date);
-		}
-		// echo "</br>";
-		// print_r($datarow);
-		// echo gettype($datarow);
+				}
+				return $dates;
+				}
+				$alldate = date_range($val,$end_date);
+				// echo gettype($alldate);
+				// print_r($alldate);
+				$this->load->model('Dbmodel');
+				$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
+				$data['output'] = $rangereport;
+				$datarow = array();
+				foreach ($data['output'] as $item){
+				array_push($datarow, $item->date);
+				}
+				// echo "</br>";
+				// print_r($datarow);
+				// echo gettype($datarow);
 
-		// echo "</br>";
-		// echo "comparing....";
+				// echo "</br>";
+				// echo "comparing....";
 
-		$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
-		// print_r($alldateslist);
-		if(empty($alldateslist)){
-			// echo "empty...";
-			$this->load->model('Dbmodel');
-			$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
-			$data['viewdata'] = $rangereport;
-		} else {
+				$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
+				// print_r($alldateslist);
+				if(empty($alldateslist)){
+				// echo "empty...";
+				$this->load->model('Dbmodel');
+				$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
+				$data['viewdata'] = $rangereport;
+				} else {
 			$this->load->model('Dbmodel');
 			$this->Dbmodel->insertdatamonth($empid,$alldateslist);
 			$this->load->model('Dbmodel');
 			$rangereport = $this->Dbmodel->getreportbydates($empid,$val,$end_date);
 			$data['viewdata']=$rangereport;
+			}
 		}
-	}
 }
 
 	// print_r($rangereport);
@@ -544,20 +567,6 @@ class Welcome extends CI_Controller {
 	$this->load->view('employeereport',$data);
 
 	}
-
-	public function ExportCSV() {
-        $this->load->dbutil();
-        $this->load->helper('file');
-        $this->load->helper('download');
-        $delimiter = ",";
-        $newline = "\r\n";
-        $filename = "filename_you_wish.csv";
-        $query = "SELECT * FROM `report` WHERE empid = 4 ";
-        $result = $this->db->query($query);
-        $data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
-        force_download($filename, $data);
-	}
-
 	public function editreport() {
 		// $this->load->view('employeeheader');
 		$emploeeuserid = $_SESSION['emploeeuserid'];
@@ -819,10 +828,10 @@ class Welcome extends CI_Controller {
 		echo "</br>";
 		print_r($datarow);
 		echo gettype($datarow);
-		
+
 		echo "</br>";
 		echo "comparing....";
-		
+
 		$alldateslist = array_merge(array_diff($alldate, $datarow), array_diff($datarow, $alldate));
 		print_r($alldateslist);
 		if(empty($alldateslist)){
@@ -840,5 +849,77 @@ class Welcome extends CI_Controller {
 		}
 		$this->load->view('employeereport',$data);
 }
+public function ExportCSVold() {
+			$this->load->dbutil();
+			$this->load->helper('file');
+			$this->load->helper('download');
+			$delimiter = ",";
+			$newline = "\r\n";
+			$filename = "filename_you_wish.csv";
+			$query = "SELECT * FROM `report` WHERE empid = 4 ";
+			$result = $this->db->query($query);
+			$data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
+			force_download($filename, $data);
+}
+
+//  EXPORT TO CSV
+
+public function ExportCSV() {
+
+	// $empid = $_SESSION['emploeeuserid'];
+	// $last = $_SESSION['lastdate'];
+	// $duration = $_SESSION['duration'];
+	// echo $empid;
+	// echo $last;
+	// echo $duration;
+	// echo $_SESSION['wantedmonth1'];
+	// echo $_SESSION['wantedmonth2'];
+	// $NewDate = Date('y-m-d');
+	// $this_week_sd =  date('Y-m-d', strtotime("last Sunday " .$NewDate));
+	// $this_week_sd = date ("Y-m-d", strtotime("+1 day", strtotime($this_week_sd)));
+	// $this_week_ed= date('Y-m-d', strtotime("saturday" .$this_week_sd));
+	// $this_week_ed = date ("Y-m-d", strtotime("-1 day", strtotime($this_week_ed)));
+	// echo $this_week_sd;
+	// echo  $this_week_ed;
+		$this->load->library("excel");
+		$object = new PHPExcel();
+		
+		$object->setActiveSheetIndex(0);
+		
+		$table_columns = array("Name", "Address", "Gender", "Designation", "Age","Name", "Address", "Gender", "Designation", "Age");
+		
+		$column = 0;
+		
+		foreach($table_columns as $field)
+		{
+			$object->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+			$column++;
+		}
+		$this->load->model('Dbmodel');
+		$employee_data = $this->Dbmodel->getdata();
+		
+		$excel_row = 2;
+		
+		foreach($employee_data as $row)
+		{
+			$object->getActiveSheet()->setCellValueByColumnAndRow(0, $excel_row, $row->reportid);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(1, $excel_row, $row->empid);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(2, $excel_row, $row->date);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(3, $excel_row, $row->strattime);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(4, $excel_row, $row->empid);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(5, $excel_row, $row->date);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(6, $excel_row, $row->strattime);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(7, $excel_row, $row->empid);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(8, $excel_row, $row->date);
+			$object->getActiveSheet()->setCellValueByColumnAndRow(9, $excel_row, $row->strattime);
+			$excel_row++;
+		}
+		
+		$object_writer = PHPExcel_IOFactory::createWriter($object, 'Excel5');
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Employee Data.xls"');
+		$object_writer->save('php://output');
+
+	}
 
 }

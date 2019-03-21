@@ -33,34 +33,24 @@
 				<?php $id = intval($_GET['id']);?>
 				<?php $emploeeuserid = $_SESSION['emploeeuserid'];  ?>
 				<?php $empname = $_SESSION['emploeeusername'];?>
-
 				<div id="container">
 					<div class="tg-wrap"><table class="tg">
 							<tr>
 								<th colspan="10" style="background-color:#ffffff;">
-<!--  var e = document.getElementById("elementId");
-var value = document.getElementById("duration").options[document.getElementById("duration").selectedIndex].value;-->
-
-
 									<button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdaysfordecrement'" style="text-align: center;" type="button" class="btn btn-success">Previous</button>
 									<select id="duration" name="filter" onchange="getduration()" style="height: 38px;background-color:#26ADE4;border-radius: 5px;">
 											<option value="<?php echo  $_SESSION["duration"];?>"> <?php echo  $_SESSION["duration"];?></option>
+											<?php if ($_SESSION['duration'] == "Week") {?>
+													<option value="Month">Month</option>
+								<?php	} ?>
+									<?php if ($_SESSION['duration'] == "Month") {?>
 										<option value="Week">Week</option>
-										<option value="Month">Month</option>
+											<?php	} ?>
 									</select>
-									<button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdaysforincrement'" style="text-align: center;" type="button" class="btn btn-success">  Next    </button>
+									<button onclick="window.location.href='<?php echo base_url(); ?>Welcome/weekdaysforincrement'" style="text-align: center;" type="button" class="btn btn-success">Next</button>
 									<button onclick="window.location.href='<?php echo base_url(); ?>Welcome/ExportCSV'" style="text-align: center;" type="button" class="btn btn-success">Export</button>
 								</th>
 							</tr>
-<script>
-	function getduration() {
-	      var selValue = document.getElementById("duration").value;
-				console.log(selValue);
-				$.post("<?php echo base_url(); ?>Welcome/getdurationajax", {res_id:selValue});
-
-	    }
-</script>
-
 							<tr>
 								<th class="tg-0pky">Date</th>
 								<th class="tg-0pky">Start Time</th>
@@ -77,33 +67,28 @@ var value = document.getElementById("duration").options[document.getElementById(
 								<?php $num = 1;?>
 								<?php foreach($viewdata as $data){ ?>
 								<?php if($data->empid == $emploeeuserid ){?>
-
 								<td class="tg-0pky"><?php echo $data->date;?></td>
 								<td class="tg-0pky"><?php echo $data->strattime;?></td>
-								<td class="tg-0pky"><?php echo $data->breaks;?>
-									<?php if($data->breaks){
-										echo " minutes";
-									}?>
-									<!-- <select name="D1">
+								<td class="tg-0pky">
+									<select name="D1">
 										<option value="0:30">0:30</option>
-										<option value="0:45">0:45</option>
 										<option value="1:00">1:00</option>
 										<option value="1:30">1:30</option>
 										<option value="2:00">2:00</option>
-									</select> -->
+									</select>
 								</td>
 								<td class="tg-0pky"><?php echo $data->endtime;?></td>
 								<td class="tg-0pky"><?php echo $data->rounding;?></td>
 								<td class="tg-0pky"><?php echo $data->total;?></td>
 								<td class="tg-0pky"><?php echo $data->project;?></td>
 								<td class="tg-0pky"><?php echo $data->cat;?></td>
-								<td class="tg-0pky">	<?php echo $data->workdetails;?>
-									<!-- <textarea name="message" rows="2" cols="70">
-
-									</textarea> -->
+								<td class="tg-0pky">
+									<textarea name="message" rows="2" cols="70">
+										<?php echo $data->workdetails;?>
+									</textarea>
 								</td>
 								<td class="tg-0pky">
-									<button id="edit" onclick="window.location.href='<?php echo base_url();?>/Welcome/editreport?id/<?php echo $data->date;?>'" style="text-align: center;" type="button"  class="btn btn-success" >Edit</button>
+									<button style="text-align: center;" type="button" class="btn btn-success">Edit</button>
 								</td>
 								<?php $num ++;?>
 								<tr/>
@@ -112,50 +97,14 @@ var value = document.getElementById("duration").options[document.getElementById(
 							</tr>
 						</table></div>
 				</div>
-
 			</body>
 
 			<script>
-    $(function() {
-        $( "#datepicker" ).datepicker({ minDate: 0});
-    });
+			function getduration() {
+				var selValue = document.getElementById("duration").value;
+				console.log(selValue);
+				$.post("<?php echo base_url(); ?>Welcome/getdurationajax", {res_id:selValue});
+		}
 </script>
-<script>
-    $(document).ready(function(){
-        $('#timepicker').mdtimepicker();
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#timepicker2').mdtimepicker();
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#pass').mdtimepicker();
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#pass2').mdtimepicker();
-    });
-	$("#edit").click(function(){
-		console.log(document.getElementById("edit").value );
-});
-</script>
-
-			<script>
-				var $rows = $('#table tr');
-				$('#search').keyup(function() {
-
-				var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-				reg = RegExp(val, 'i'),
-				text;
-
-				$rows.show().filter(function() {
-				text = $(this).text().replace(/\s+/g, ' ');
-				return !reg.test(text);
-				}).hide();
-				});
 			</script>
 		</html>

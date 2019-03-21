@@ -107,10 +107,9 @@ html, body {
         <div class="container-fluid">
             <div class="nav navbar-nav navbar"> CompanyLogo</div>
             <ul class="nav navbar-nav navbar-right">
-            <li><a href="<?php echo base_url(); ?>Welcome/adminhome">Home</a></li>
             <li><a href="<?php echo base_url(); ?>Welcome/dashboard">Dashboard</a></li>
             <li><a href="<?php echo base_url(); ?>Welcome/projects">Projects</a></li>
-            <li><a href="<?php echo base_url(); ?>Welcome/employeeregister">Employees</a></li>
+            <li><a href="<?php echo base_url(); ?>Welcome/employeelist">Employees</a></li>
             <li><a href="<?php echo base_url(); ?>Welcome/userLogout">Logout</a></li>
             </ul>
         </div>
